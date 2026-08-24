@@ -30,7 +30,7 @@ class ProductSupplier(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
 
 class Inventory(models.Model):
-    Product=models.OneToOneField(Product,on_delete=models.PROTECT)
+    product=models.OneToOneField(Product,on_delete=models.PROTECT)
     stock_quantity=models.IntegerField()
     reorder_level=models.IntegerField()
     updated_at=models.DateTimeField(auto_now=True)
