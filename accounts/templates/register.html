@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGISTRATION PAGE</title>
+</head>
+<body>
+    <h1>CREATE NEW ACCOUNT</h1>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label for="">Username : </label><input type="text" name="username" id="" required>
+        <label for="">Email : </label><input type="email" name="email" id="" required>
+        <label for="">Password : </label><input type="password" name="password" id="" required>
+        <label for="">Confirm Password : </label><input type="password" name="confirm_password" id="" required>
+
+        <button type="submit">REGISTER</button>
+    </form>
+</body>
+</html>
