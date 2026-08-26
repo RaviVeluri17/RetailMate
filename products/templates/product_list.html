@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>LIST OF PRODUCTS</h2>
+    {% for i in products %}
+        {{forloop.counter}}
+        <p>Name: {{i.name}}</p>
+        <p>Desc: {{i.desc}}</p>
+        <p>selling price: {{i.selling_price}}</p>
+        <a href="{% url 'product_details' i.id %}">View Product details</a>
+        <br><br>
+    {% endfor %}
+</body>
+</html>
