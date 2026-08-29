@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Suppliers</h1>
+    <a href="{% url 'supplier_create' %}">Add Supplier</a>
+    <hr>
+
+    {% for supplier in suppliers %}
+        <h3>{{ supplier.name }}</h3>
+
+        <p>Email: {{ supplier.email }}</p>
+        <p>Phone: {{ supplier.phone }}</p>
+        <p>Address: {{ supplier.address }}</p>
+
+        <a href="{% url 'supplier_update' supplier.id %}">Edit</a>
+        
+        <a href="{% url 'supplier_delete' supplier.id %}">Delete</a>
+        <hr>
+
+    {% empty %}
+        <p>No suppliers available.</p>
+    {% endfor %}
+</body>
+</html>

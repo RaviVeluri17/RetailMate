@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory - RetailFlow</title>
+</head>
+
+<body>
+    <h1>Inventory</h1>
+    {% for inventory in inventories %}
+        <h3>{{ inventory.product.name }}</h3>
+        <p>Stock : {{ inventory.stock_quantity }}</p>
+        <p>Reorder Level : {{ inventory.reorder_level }}</p>
+        <p>Last Updated : {{ inventory.updated_at }}</p>
+        <hr>
+    {% empty %}
+        <p>No inventory records available.</p>
+    {% endfor %}
+</body>
+</html>

@@ -10,5 +10,11 @@
     <p>Description : {{product.desc}}</p>
     <p>selling price : {{product.selling_price}}</p>
     <p>Category : {{product.Category}}</p>
+
+    <form method="POST" action="{% url 'add_to_cart' product.id %}">
+        {% csrf_token %}
+        <label>Quantity:</label><input type="number" name="quantity" value="1" min="1" required>
+        <button type="submit">Add to Cart</button>
+    </form>
 </body>
 </html>

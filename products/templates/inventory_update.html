@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Update Inventory</h1>
+    <p>Product: {{ inventory.product.name }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Stock Quantity:</label><input type="number" name="stock_quantity" value="{{ inventory.stock_quantity }}" min="0" required>
+        <br><br>
+        <label>Reorder Level:</label><input type="number" name="reorder_level" value="{{ inventory.reorder_level }}" min="0" required>
+        <br><br>
+
+        <button type="submit">Update Inventory</button>
+    </form>
+</body>
+</html>
