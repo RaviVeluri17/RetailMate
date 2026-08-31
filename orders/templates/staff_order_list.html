@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All Customer Orders</h1>
+    {% for order in orders %}
+        <h3>Order #{{ order.id }}</h3>
+        <p>Customer: {{ order.customer.username }}</p>
+        <p>Status: {{ order.status }}</p>
+        <p>Total: ₹{{ order.total_amount }}</p>
+        <a href="{% url 'staff_order_update' order.id %}">Update Status</a>
+        <hr>
+    {% empty %}
+        <p>No orders available.</p>
+    {% endfor %}
+</body>
+</html>
