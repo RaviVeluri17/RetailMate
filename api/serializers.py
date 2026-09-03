@@ -50,5 +50,5 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ["customer","status","total_amount","created_at","updated_at","items",]
 
     def get_items(self, obj):
-        items = OrderItem.objects.filter(order=obj)
+        items = obj.orderitem_set.all()
         return OrderItemSerializer(items, many=True).data

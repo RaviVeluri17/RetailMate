@@ -6,13 +6,14 @@ from rest_framework.viewsets import ModelViewSet,ViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from orders.services import place_order
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by("id")
     serializer_class = ProductSerializer
     permission_classes = [IsStaffOrReadOnly]
     filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
@@ -21,17 +22,17 @@ class ProductViewSet(ModelViewSet):
     ordering_fields=["name","mrp","selling_price"]
 
 class CategoryViewSet(ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().order_by("id")
     serializer_class = CategorySerializer
     permission_classes = [IsStaffOrReadOnly]
 
 class SupplierViewSet(ModelViewSet):
-    queryset=Supplier.objects.all()
+    queryset=Supplier.objects.all().order_by("id")
     serializer_class=SupplierSerializer
     permission_classes=[IsStaffOrReadOnly]
 
 class InventoryViewSet(ModelViewSet):
-    queryset=Inventory.objects.all()
+    queryset=Inventory.objects.all().order_by("id")
     serializer_class=InventorySerializer
     permission_classes=[IsStaffOrReadOnly]
 
@@ -39,7 +40,7 @@ class CartItemViewSet(ModelViewSet):
     serializer_class = CartItemSerializer
     permission_classes = [IsCustomer]
     def get_queryset(self):
-        return CartItem.objects.filter(customer=self.request.user)
+        return CartItem.objects.filter(customer=self.request.user).order_by("id")
 
     def create(self, request, *args, **kwargs):
         product_id = request.data.get("product")
@@ -68,13 +69,13 @@ class CartItemViewSet(ModelViewSet):
 class OrderViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
     def list(self, request):
-        orders = Order.objects.filter(customer=request.user)
-        serializer = OrderSerializer(orders,many=True)
+        orders = (Order.objects.filter(customer=request.user).prefetch_related("orderitem_set").order_by("id"))
+        serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
-            order = Order.objects.get(id=pk,customer=request.user)
+            order = Order.objects.prefetch_related("orderitem_set").get(id=pk,customer=request.user)
         except Order.DoesNotExist:
             return Response({"error": "Order not found"},status=status.HTTP_404_NOT_FOUND)
         serializer = OrderSerializer(order)
@@ -87,3 +88,38 @@ class OrderViewSet(ViewSet):
             return Response({"error": str(e)},status=status.HTTP_400_BAD_REQUEST)
         serializer = OrderSerializer(order)
         return Response(serializer.data,status=status.HTTP_201_CREATED)
+
+    @action(detail=True,methods=["patch"],permission_classes=[IsStaffOrReadOnly])
+    def status(self, request, pk=None):
+        try:
+            order = Order.objects.get(id=pk)
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found"},status=status.HTTP_404_NOT_FOUND)
+
+        new_status = request.data.get("status")
+        allowed_transitions = {
+            "PENDING": ["CONFIRMED", "CANCELLED"],
+            "CONFIRMED": ["PROCESSING", "CANCELLED"],
+            "PROCESSING": ["SHIPPED"],
+            "SHIPPED": ["DELIVERED"],
+            "DELIVERED": [],
+            "CANCELLED": [],
+        }
+
+        if new_status not in allowed_transitions:
+            return Response({"error": "Invalid order status."},status=status.HTTP_400_BAD_REQUEST)
+
+        if new_status not in allowed_transitions[order.status]:
+            return Response(
+                {
+                    "error": (
+                        f"Cannot change order status "
+                        f"from {order.status} to {new_status}."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        order.status = new_status
+        order.save()
+        return Response(OrderSerializer(order).data)
