@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RetailFlow{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-shell" aria-label="Primary navigation">
+            <a class="brand" href="{% url 'products_list' %}">
+                <span class="brand-mark">RF</span>
+                <span>Retail<span class="brand-accent">Flow</span></span>
+            </a>
+            <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" data-nav-menu>
+                <a href="{% url 'products_list' %}">Shop</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'order_history' %}">Orders</a>
+                    <a href="{% url 'cart' %}" class="nav-cart">Cart</a>
+                    <a href="{% url 'profile' %}">Profile</a>
+                    <a href="{% url 'logout' %}" class="nav-muted">Sign out</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="button button-small">Sign in</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <main class="page-shell">
+        {% if messages %}
+            <div class="flash-stack">
+                {% for message in messages %}<div class="flash">{{ message }}</div>{% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="site-footer"><span>RetailFlow</span><span>Inventory, orders, and everyday momentum.</span></footer>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

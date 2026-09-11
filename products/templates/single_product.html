@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>Name : {{product.name}}</p>
-    <p>Description : {{product.desc}}</p>
-    <p>selling price : {{product.selling_price}}</p>
-    <p>Category : {{product.Category}}</p>
-
-    <form method="POST" action="{% url 'add_to_cart' product.id %}">
-        {% csrf_token %}
-        <label>Quantity:</label><input type="number" name="quantity" value="1" min="1" required>
-        <button type="submit">Add to Cart</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} | RetailFlow{% endblock %}
+{% block content %}
+<div class="split">
+    <article class="surface card">
+        <p class="eyebrow">Product detail</p><h1>{{ product.name }}</h1>
+        <p>{{ product.desc }}</p>
+        <div class="summary-row"><span class="muted">Category</span><strong>{{ product.category.name }}</strong></div>
+        <div class="summary-row"><span class="muted">Price</span><span class="price">₹{{ product.selling_price }}</span></div>
+    </article>
+    <aside class="surface summary"><p class="card-kicker">Ready when you are</p><h2>Add to cart</h2>
+        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}<div class="field"><label for="quantity">Quantity</label><input id="quantity" type="number" name="quantity" value="1" min="1" required></div>
+            <button class="button" type="submit">Add to cart <span>↗</span></button>
+        </form>
+    </aside>
+</div>
+{% endblock %}

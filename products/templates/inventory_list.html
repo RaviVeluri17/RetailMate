@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inventory - RetailFlow</title>
-</head>
-
-<body>
-    <h1>Inventory</h1>
+{% extends 'base.html' %}{% block title %}Inventory | RetailFlow{% endblock %}{% block content %}<div class="page-heading"><div><p class="eyebrow">Stock control</p><h1>Inventory.</h1></div><a class="button" href="{% url 'inventory_create' %}">Add inventory</a></div><section class="surface table-wrap"><table><thead><tr><th>Product</th><th>In stock</th><th>Reorder at</th><th>Last updated</th><th></th></tr></thead><tbody>
     {% for inventory in inventories %}
-        <h3>{{ inventory.product.name }}</h3>
-        <p>Stock : {{ inventory.stock_quantity }}</p>
-        <p>Reorder Level : {{ inventory.reorder_level }}</p>
-        <p>Last Updated : {{ inventory.updated_at }}</p>
-        <hr>
+        <tr><td><strong>{{ inventory.product.name }}</strong></td><td><span class="status">{{ inventory.stock_quantity }}</span></td><td>{{ inventory.reorder_level }}</td><td>{{ inventory.updated_at|date:"M d, Y" }}</td><td><a class="button-link" href="{% url 'inventory_update' inventory.id %}">Edit ↗</a></td></tr>
     {% empty %}
-        <p>No inventory records available.</p>
+        <tr><td colspan="5">No inventory records available.</td></tr>
     {% endfor %}
-</body>
-</html>
+</tbody></table></section>{% endblock %}

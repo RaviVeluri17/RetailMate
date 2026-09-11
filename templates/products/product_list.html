@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Shop | RetailFlow{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <div><p class="eyebrow">The everyday edit</p><h1>Good products.<br><em>Clear choices.</em></h1><p>Browse the essentials your business and home rely on, selected for value and consistency.</p></div>
+    <a class="button button-secondary" href="{% url 'cart' %}">View cart <span>↗</span></a>
+</section>
+<div class="grid product-grid">
+    {% for product in products %}
+        <article class="surface card">
+            <p class="card-kicker">{{ product.category.name }}</p>
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.desc }}</p>
+            <div class="summary-row"><span class="price">₹{{ product.selling_price }}</span><a class="button-link" href="{% url 'product_details' product.id %}">View product ↗</a></div>
+        </article>
+    {% empty %}
+        <div class="surface empty-state"><h2>No products yet.</h2><p>Check back soon for the first collection.</p></div>
+    {% endfor %}
+</div>
+{% endblock %}

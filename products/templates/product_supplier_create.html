@@ -1,35 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Assign Supplier to Product</h1>
+{% extends 'base.html' %}{% block title %}Assign supplier | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Partners</p><h1>Assign a supplier.</h1>
     <form method="POST">
         {% csrf_token %}
-        <label>Product : </label>
-        <select name="product" required>
+        <div class="form-grid"><div class="field"><label>Product</label><select name="product" required>
             {% for product in products %}
                 <option value="{{ product.id }}">
                     {{ product.name }}
                 </option>
             {% endfor %}
-        </select>
-        <br><br>
-
-        <label>Supplier:</label>
-        <select name="supplier" required>
+        </select></div><div class="field"><label>Supplier</label><select name="supplier" required>
             {% for supplier in suppliers %}
                 <option value="{{ supplier.id }}">
                     {{ supplier.name }}
                 </option>
             {% endfor %}
-        </select>
-        <br><br>
-
-        <button type="submit">Assign Supplier</button>
+        </select></div></div><div class="form-actions"><button class="button" type="submit">Assign supplier</button><a class="button-link" href="{% url 'supplier_list' %}">Cancel</a></div>
     </form>
-</body>
-</html>
+    </section>{% endblock %}

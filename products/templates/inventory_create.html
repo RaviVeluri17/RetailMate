@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Create Inventory</h1>
+{% extends 'base.html' %}{% block title %}New inventory | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Stock control</p><h1>Add inventory.</h1>
     <form method="POST">
         {% csrf_token %}
-        <label>Product:</label>
-        <select name="product" required>
+        <div class="form-grid"><div class="field field-wide"><label>Product</label><select name="product" required>
             {% for product in products %}
                 <option value="{{ product.id }}">{{ product.name }}</option>
             {% endfor %}
-        </select>
-        <br><br>
-
-        <label>Stock Quantity:</label><input type="number" name="stock_quantity" min="0" required><br><br>
-        <label>Reorder Level:</label><input type="number" name="reorder_level" min="0" required><br><br>
-
-        <button type="submit">Create Inventory</button>
+        </select></div><div class="field"><label>Stock quantity</label><input type="number" name="stock_quantity" min="0" required></div><div class="field"><label>Reorder level</label><input type="number" name="reorder_level" min="0" required></div></div><div class="form-actions"><button class="button" type="submit">Create inventory</button><a class="button-link" href="{% url 'inventory_list' %}">Cancel</a></div>
     </form>
-</body>
-</html>
+    </section>{% endblock %}

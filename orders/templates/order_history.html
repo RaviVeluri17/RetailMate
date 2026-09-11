@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>My Orders</h1>
+{% extends 'base.html' %}
+{% block title %}My orders | RetailFlow{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Your history</p><h1>My orders.</h1><p>Everything you have placed, all in one calm little timeline.</p></div></div>
+<div class="order-list">
     {% for order in orders %}
-        <h3>Order #{{ order.id }}</h3>
-        <p>Status: {{ order.status }}</p>
-        <p>Total: ₹{{ order.total_amount }}</p>
-        <p>Created: {{ order.created_at }}</p>
-        <a href="{% url 'order_detail' order.id %}">View Order</a>
-        <hr>
+        <article class="surface order-card"><div><p class="card-kicker">Order #{{ order.id }}</p><h3>Placed {{ order.created_at|date:"M d, Y" }}</h3><p>₹{{ order.total_amount }}</p></div><div><span class="status {% if order.status == 'CANCELLED' %}status-cancelled{% endif %}">{{ order.status }}</span><br><a class="button-link" href="{% url 'order_detail' order.id %}">View order ↗</a></div></article>
     {% empty %}
-        <p>You haven't placed any orders yet.</p>
+        <div class="surface empty-state"><h2>No orders yet.</h2><p>Your next good decision can start here.</p><a class="button" href="{% url 'products_list' %}">Browse products</a></div>
     {% endfor %}
-</body>
-</html>
+</div>
+{% endblock %}

@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>UPDATE CATEGORY</h1>
+{% extends 'base.html' %}{% block title %}Edit category | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Catalog structure</p><h1>Edit category.</h1>
     <form method="POST">
         {% csrf_token %}
-        <label>Category Name:</label>
-        <input type="text" name="name" value="{{ category.name }}" required >
-
-        <button type="submit">Update Category</button>
+        <div class="field"><label>Category name</label><input type="text" name="name" value="{{ category.name }}" required></div><div class="form-actions"><button class="button" type="submit">Save changes</button><a class="button-link" href="{% url 'category_list' %}">Cancel</a></div>
     </form>
-</body>
-</html>
+    </section>{% endblock %}

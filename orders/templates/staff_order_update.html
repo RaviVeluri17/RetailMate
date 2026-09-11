@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Update order | RetailFlow{% endblock %}
+{% block content %}
+<section class="surface form-shell"><p class="eyebrow">Operations</p><h1>Update order #{{ order.id }}.</h1><p>Customer: {{ order.customer.username }} · Current status: <span class="status">{{ order.status }}</span></p>
+<form method="POST">{% csrf_token %}<div class="field"><label for="status">Next status</label><select id="status" name="status"><option value="PENDING">Pending</option><option value="CONFIRMED">Confirmed</option><option value="PROCESSING">Processing</option><option value="SHIPPED">Shipped</option><option value="DELIVERED">Delivered</option><option value="CANCELLED">Cancelled</option></select></div><div class="form-actions"><button class="button" type="submit">Update status</button><a class="button-link" href="{% url 'staff_order_list' %}">Back to orders</a></div></form></section>
+{% endblock %}

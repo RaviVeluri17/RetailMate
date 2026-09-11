@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Order #{{ order.id }}</h1>
-    <p>Status: {{ order.status }}</p>
-    <p>Total: ₹{{ order.total_amount }}</p>
-    <p>Placed on: {{ order.created_at }}</p>
-    <hr>
-    <h2>Items</h2>
+{% extends 'base.html' %}
+{% block title %}Order #{{ order.id }} | RetailFlow{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Order detail</p><h1>Order #{{ order.id }}</h1><p>Placed {{ order.created_at|date:"M d, Y" }}</p></div><span class="status">{{ order.status }}</span></div>
+<section class="surface">
+    <div class="item-row" style="grid-template-columns: 1fr auto auto;"><strong>Item</strong><strong>Quantity</strong><strong>Total</strong></div>
     {% for item in items %}
-        <h3>{{ item.product.name }}</h3>
-        <p>Quantity: {{ item.quantity }}</p>
-        <p>Price: ₹{{ item.price }}</p>
-        <p>Item Total: ₹{{ item.item_total }}</p>
-        <hr>
+        <div class="item-row"><div><h3>{{ item.product.name }}</h3><p>₹{{ item.price }} each</p></div><span>{{ item.quantity }}</span><strong>₹{{ item.item_total }}</strong></div>
     {% empty %}
-        <p>No items found.</p>
+        <div class="empty-state"><p>No items found.</p></div>
     {% endfor %}
-    <a href="{% url 'order_history' %}">Back to My Orders</a>
-</body>
-</html>
+    <div class="summary-total" style="padding: 24px;"><span>Total</span><span>₹{{ order.total_amount }}</span></div>
+</section><p style="margin-top: 24px;"><a class="button-link" href="{% url 'order_history' %}">← Back to my orders</a></p>
+{% endblock %}

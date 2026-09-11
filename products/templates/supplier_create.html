@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Create Supplier</h1>
+{% extends 'base.html' %}{% block title %}New supplier | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Partners</p><h1>Add a supplier.</h1>
     <form method="POST">
         {% csrf_token %}
-        <label>Name : </label><input type="text" name="name" required><br><br>
-        <label>Email : </label><input type="email" name="email" required><br><br>
-        <label>Phone : </label><input type="text" name="phone" required><br><br>
-        <label>Address : </label><textarea name="address"></textarea><br><br>
-        <button type="submit">Create Supplier</button>
+        <div class="form-grid"><div class="field"><label>Name</label><input type="text" name="name" required></div><div class="field"><label>Email</label><input type="email" name="email" required></div><div class="field"><label>Phone</label><input type="text" name="phone" required></div><div class="field field-wide"><label>Address</label><textarea name="address"></textarea></div></div><div class="form-actions"><button class="button" type="submit">Create supplier</button><a class="button-link" href="{% url 'supplier_list' %}">Cancel</a></div>
     </form>
-</body>
-</html>
+    </section>{% endblock %}

@@ -1,29 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Suppliers</h1>
-    <a href="{% url 'supplier_create' %}">Add Supplier</a>
-    <hr>
-
+{% extends 'base.html' %}{% block title %}Suppliers | RetailFlow{% endblock %}{% block content %}<div class="page-heading"><div><p class="eyebrow">Partners</p><h1>Suppliers.</h1></div><a class="button" href="{% url 'supplier_create' %}">Add supplier</a></div><section class="surface table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th></th></tr></thead><tbody>
     {% for supplier in suppliers %}
-        <h3>{{ supplier.name }}</h3>
-
-        <p>Email: {{ supplier.email }}</p>
-        <p>Phone: {{ supplier.phone }}</p>
-        <p>Address: {{ supplier.address }}</p>
-
-        <a href="{% url 'supplier_update' supplier.id %}">Edit</a>
-        
-        <a href="{% url 'supplier_delete' supplier.id %}">Delete</a>
-        <hr>
+        <tr><td><strong>{{ supplier.name }}</strong><br><span class="muted">{{ supplier.address }}</span></td><td>{{ supplier.email }}</td><td>{{ supplier.phone }}</td><td><a class="button-link" href="{% url 'supplier_update' supplier.id %}">Edit ↗</a></td></tr>
 
     {% empty %}
-        <p>No suppliers available.</p>
+        <tr><td colspan="4">No suppliers available.</td></tr>
     {% endfor %}
-</body>
-</html>
+</tbody></table></section>{% endblock %}

@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN PAGE</title>
-</head>
-<body>
-    <h1>Login to RetailFlow</h1>
+{% extends 'base.html' %}
+{% block title %}Sign in | RetailFlow{% endblock %}
+{% block content %}
+<section class="surface form-shell">
+    <p class="eyebrow">Welcome back</p><h1>Sign in to<br>RetailFlow.</h1><p>Pick up where you left off.</p>
     <form method="POST">
         {% csrf_token %}
-        <label>Username:</label><input type="text" name="username" required>
-        <br><br>
-        <label>Password:</label><input type="password" name="password" required>
-        <br><br>
-        <button type="submit">Login</button>
-        <button type="button"><a href="{% url 'register' %}">CREATE NEW ACCOUNT</a></button>
+        <div class="field"><label for="username">Username</label><input id="username" type="text" name="username" required></div>
+        <div class="field"><label for="password">Password</label><input id="password" type="password" name="password" required></div>
+        <div class="form-actions"><button class="button" type="submit">Sign in</button><a class="button-link" href="{% url 'register' %}">Create an account</a></div>
     </form>
-</body>
-</html>
+</section>
+{% endblock %}

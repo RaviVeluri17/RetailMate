@@ -1,29 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Create Product</h1>
+{% extends 'base.html' %}{% block title %}New product | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Catalog</p><h1>Add a product.</h1>
 
     <form method="POST">
         {% csrf_token %}
 
-        <label>Name:</label><input type="text" name="name" required><br><br>
-        <label>Description:</label><textarea name="desc"></textarea><br><br>
-        <label>Category:</label>
-        <select name="category" required>
+        <div class="form-grid"><div class="field"><label>Name</label><input type="text" name="name" required></div><div class="field"><label>Category</label><select name="category" required>
             {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
             {% endfor %}
-        </select>
-        <br><br>
-        <label>Cost Price:</label><input type="number" step="0.01" name="mrp" required><br><br>
-        <label>Selling Price:</label><input type="number" step="0.01" name="selling_price" required><br><br>
-
-        <button type="submit">Create Product</button>
+        </select></div><div class="field"><label>Cost price</label><input type="number" step="0.01" name="mrp" required></div><div class="field"><label>Selling price</label><input type="number" step="0.01" name="selling_price" required></div><div class="field field-wide"><label>Description</label><textarea name="desc"></textarea></div></div><div class="form-actions"><button class="button" type="submit">Create product</button><a class="button-link" href="{% url 'products_list' %}">Cancel</a></div>
     </form>
-</body>
-</html>
+    </section>{% endblock %}

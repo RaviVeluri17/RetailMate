@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Profile | RetailFlow{% endblock %} 
+{% block content %}
+<section class="surface form-shell">
+    <p class="eyebrow">Account</p>
+    <h1>Hello, {{ user.username }}.</h1>
+    <p>Your RetailFlow account is ready for the next order.</p>
+    <div class="summary-row">
+        <span class="muted">Username</span><strong>{{ user.username }}</strong>
+    </div>
+    <div class="summary-row">
+        <span class="muted">Email</span><strong>{{ user.email }}</strong>
+    </div>
+    <div class="form-actions">
+        <a class="button" href="{% url 'products_list' %}">Browse products</a>
+        <a class="button-link" href="{% url 'logout' %}">Sign out</a>
+    </div>
+</section>
+{% endblock %}

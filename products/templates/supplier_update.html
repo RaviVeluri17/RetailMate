@@ -1,24 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Update Supplier</h1>
+{% extends 'base.html' %}{% block title %}Edit supplier | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Partners</p><h1>Edit supplier.</h1>
 
     <form method="POST">
         {% csrf_token %}
-        <label>Name:</label><input type="text" name="name" value="{{ supplier.name }}" required> 
-        <br><br>
-        <label>Email:</label><input type="email" name="email" value="{{ supplier.email }}" required>
-        <br><br>
-        <label>Phone:</label><input type="text" name="phone" value="{{ supplier.phone }}" required>
-        <br><br>
-        <label>Address:</label><textarea name="address">{{ supplier.address }}</textarea>
-        <br><br>
-        <button type="submit">Update Supplier</button>
+        <div class="form-grid"><div class="field"><label>Name</label><input type="text" name="name" value="{{ supplier.name }}" required></div><div class="field"><label>Email</label><input type="email" name="email" value="{{ supplier.email }}" required></div><div class="field"><label>Phone</label><input type="text" name="phone" value="{{ supplier.phone }}" required></div><div class="field field-wide"><label>Address</label><textarea name="address">{{ supplier.address }}</textarea></div></div><div class="form-actions"><button class="button" type="submit">Save changes</button><a class="button-link" href="{% url 'supplier_list' %}">Cancel</a></div>
     </form>
-</body>
-</html>
+    </section>{% endblock %}

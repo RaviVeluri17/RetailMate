@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block title %}Staff dashboard | RetailFlow{%
+endblock %} {% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">RetailFlow operations</p>
+        <h1>Good morning,<br />{{ user.username }}.</h1>
+        <p>Keep the catalog, stock, and order queue moving.</p>
+    </div>
+</div>
+<div class="grid product-grid">
+    <a class="surface card" href="{% url 'staff_order_list' %}">
+        <p class="card-kicker">Orders</p>
+        <h2>Customer queue ↗</h2>
+        <p>Review and update order status.</p>
+    </a>
+    <a class="surface card" href="{% url 'products_list' %}">
+        <p class="card-kicker">Catalog</p>
+        <h2>Product library ↗</h2>
+        <p>Browse the live product catalog.</p>
+    </a>
+    <a class="surface card" href="{% url 'inventory_list' %}">
+        <p class="card-kicker">Stock control</p>
+        <h2>Inventory ↗</h2>
+        <p>Keep reorder levels visible.</p>
+    </a>
+</div>
+{% endblock %}

@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Checkout</h1>
-    <p>Are you sure you want to place this order?</p>
+{% extends 'base.html' %}
+{% block title %}Checkout | RetailFlow{% endblock %}
+{% block content %}
+<section class="surface form-shell"><p class="eyebrow">Final check</p><h1>Ready to place<br>your order?</h1><p>Once placed, your order will appear in your order history so you can follow its progress.</p>
     <form method="POST">
         {% csrf_token %}
-        <button type="submit">Place Order</button>
+        <div class="form-actions"><button class="button" type="submit">Place order <span>↗</span></button><a class="button-link" href="{% url 'cart' %}">Back to cart</a></div>
     </form>
-    <br>
-    <a href="{% url 'cart' %}">Back to Cart</a>
-</body>
-</html>
+    </section>
+{% endblock %}

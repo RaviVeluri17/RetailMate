@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Delete Product</title>
-</head>
-<body>
-    <h1>Delete Product</h1>
-    <p>Are you sure you want to delete <strong>{{ product.name }}</strong> ?</p>
-    <br><br>
+{% extends 'base.html' %}{% block title %}Delete product | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell danger-zone"><p class="eyebrow">Permanent action</p><h1>Delete product?</h1><p>You are about to remove <strong>{{ product.name }}</strong>. This cannot be undone.</p>
     <form method="POST">
         {% csrf_token %}
-        <button type="submit">Yes, Delete</button>
+        <div class="form-actions"><button class="button button-danger" type="submit">Yes, delete</button><a class="button-link" href="{% url 'product_details' product.id %}">Keep product</a></div>
     </form>
-    <br><br>
-    <a href="{% url 'product_details' product.id %}">Cancel</a>
-
-</body>
-</html>
+    </section>{% endblock %}

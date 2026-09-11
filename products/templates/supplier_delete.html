@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Delete Supplier</h1>
-
-    <p>Are you sure you want to delete <strong>{{ supplier.name }}</strong> ? </p>
+{% extends 'base.html' %}{% block title %}Delete supplier | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell danger-zone"><p class="eyebrow">Permanent action</p><h1>Delete supplier?</h1><p>You are about to remove <strong>{{ supplier.name }}</strong>. This cannot be undone.</p>
 
     <form method="POST">
         {% csrf_token %}
-        <button type="submit">Yes, Delete</button>
+        <div class="form-actions"><button class="button button-danger" type="submit">Yes, delete</button><a class="button-link" href="{% url 'supplier_list' %}">Keep supplier</a></div>
     </form>
-    <br>
-    <a href="{% url 'supplier_list' %}">Cancel</a>
-</body>
-</html>
+    </section>{% endblock %}

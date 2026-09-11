@@ -53,7 +53,7 @@ def user_login(request):
 
 @login_required
 def profile(request):
-    return HttpResponse(f"Logged in as {request.user.username}")
+    return render(request, "profile.html")
 
 def user_logout(request):
     logout(request)
@@ -64,4 +64,4 @@ def staff_dashboard(request):
     if not request.user.has_perm("products.add_product"):
         return HttpResponse("You are not authorized to access this page.", status=403)
 
-    return HttpResponse(f"Staff Dashboard - Welcome {request.user.username}")
+    return render(request, "staff_dashboard.html")
