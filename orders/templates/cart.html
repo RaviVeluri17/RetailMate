@@ -2,6 +2,13 @@
 {% block title %}Your cart | RetailFlow{% endblock %}
 {% block content %}
 <div class="page-heading"><div><p class="eyebrow">Your selection</p><h1>Your cart.</h1><p>Review your items before you make them official.</p></div></div>
+
+{% if error %}
+    <div class="flash flash-error">
+        {{ error }}
+    </div>
+{% endif %}
+
 <div class="split"><section class="surface">
     {% for item in items %}
     <div class="item-row"><div><h3>{{ item.product.name }}</h3><p>₹{{ item.product.selling_price }} each</p></div><form class="inline-form" method="POST" action="{% url 'update_cart' item.id %}">{% csrf_token %}<input aria-label="Quantity" type="number" name="quantity" value="{{ item.quantity }}" min="1" required><button class="button button-secondary button-small" type="submit">Update</button></form><strong class="item-total">₹{{ item.item_total }}</strong><form method="POST" action="{% url 'remove_from_cart' item.id %}">{% csrf_token %}<button class="button-link" type="submit">Remove</button></form></div>

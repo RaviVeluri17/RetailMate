@@ -1,12 +1,46 @@
-{% extends 'base.html' %}{% block title %}New product | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Catalog</p><h1>Add a product.</h1>
+{% extends 'base.html' %}
+{% block title %}New product | RetailFlow{% endblock %}
+{% block content %}
+<section class="surface form-shell">
+    <p class="eyebrow">Catalog</p>
+    <h1>Add a product.</h1>
+    {% if error %}
+        <div class="flash">{{ error }}</div>
+    {% endif %}
 
     <form method="POST">
         {% csrf_token %}
+        <div class="form-grid">
+            <div class="field">
+                <label>Name</label><input type="text" name="name" required>
+            </div>
 
-        <div class="form-grid"><div class="field"><label>Name</label><input type="text" name="name" required></div><div class="field"><label>Category</label><select name="category" required>
-            {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-            {% endfor %}
-        </select></div><div class="field"><label>Cost price</label><input type="number" step="0.01" name="mrp" required></div><div class="field"><label>Selling price</label><input type="number" step="0.01" name="selling_price" required></div><div class="field field-wide"><label>Description</label><textarea name="desc"></textarea></div></div><div class="form-actions"><button class="button" type="submit">Create product</button><a class="button-link" href="{% url 'products_list' %}">Cancel</a></div>
+            <div class="field">
+                <label>Category</label>
+                <select name="category" required>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="field">
+                <label>MRP</label><input type="number" step="0.01" min="0" name="mrp" required>
+            </div>
+
+            <div class="field">
+                <label>Selling price</label><input type="number" step="0.01" min="0" name="selling_price" required>
+            </div>
+
+            <div class="field field-wide">
+                <label>Description</label><textarea name="desc" required></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="button" type="submit">Create product</button>
+            <a class="button-link"href="{% url 'products_list' %}">Cancel</a>
+        </div>
     </form>
-    </section>{% endblock %}
+</section>
+{% endblock %}

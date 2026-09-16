@@ -1,7 +1,52 @@
-{% extends 'base.html' %}{% block title %}Categories | RetailFlow{% endblock %}{% block content %}<div class="page-heading"><div><p class="eyebrow">Catalog structure</p><h1>Categories.</h1></div><a class="button" href="{% url 'category_create' %}">Add category</a></div><section class="surface table-wrap"><table><thead><tr><th>#</th><th>Name</th><th></th></tr></thead><tbody>
-    {% for i in category %}
-        <tr><td>{{forloop.counter}}</td><td><strong>{{i.name}}</strong></td><td><a class="button-link" href="{% url 'category_update' i.id %}">Edit ↗</a></td></tr>
-    {% empty %}
-    <tr><td colspan="3">No categories available.</td></tr>
-    {% endfor %}
-</tbody></table></section>{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Categories | RetailFlow{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Catalog structure</p>
+        <h1>Categories.</h1>
+    </div>
+    {% if perms.products.add_category %}
+        <a class="button" href="{% url 'category_create' %}">Add category</a>
+    {% endif %}
+</div>
+
+<section class="surface table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                {% if perms.products.change_category or perms.products.delete_category %}
+                    <th></th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for category in category %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><strong>{{ category.name }}</strong></td>
+                    <td>{{ category.description }}</td>
+
+                    {% if perms.products.change_category or perms.products.delete_category %}
+                        <td>
+                            {% if perms.products.change_category %}
+                                <a class="button-link" href="{% url 'category_update' category.id %}">Edit ↗</a>
+                            {% endif %}
+
+                            {% if perms.products.delete_category %}
+                                <a class="button-link"href="{% url 'category_delete' category.id %}"> Delete </a>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
+            {% empty %}
+                <tr><td colspan="4">No categories available.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

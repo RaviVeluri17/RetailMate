@@ -1,6 +1,31 @@
-{% extends 'base.html' %}{% block title %}Edit inventory | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Stock control</p><h1>Update inventory.</h1><p>{{ inventory.product.name }}</p>
+{% extends 'base.html' %}
+{% block title %}Edit inventory | RetailFlow{% endblock %}
+{% block content %}
+
+<section class="surface form-shell">
+    <p class="eyebrow">Stock control</p>
+    <h1>Update inventory.</h1>
+    <p>{{ inventory.product.name }}</p>
+    {% if error %}
+        <div class="flash">{{ error }}</div>
+    {% endif %}
+
     <form method="POST">
         {% csrf_token %}
-        <div class="form-grid"><div class="field"><label>Stock quantity</label><input type="number" name="stock_quantity" value="{{ inventory.stock_quantity }}" min="0" required></div><div class="field"><label>Reorder level</label><input type="number" name="reorder_level" value="{{ inventory.reorder_level }}" min="0" required></div></div><div class="form-actions"><button class="button" type="submit">Save changes</button><a class="button-link" href="{% url 'inventory_list' %}">Cancel</a></div>
+        <div class="form-grid">
+            <div class="field">
+                <label>Stock quantity</label><input type="number" name="stock_quantity" value="{{ inventory.stock_quantity }}" min="0" required>
+            </div>
+
+            <div class="field">
+                <label>Reorder level</label><input type="number" name="reorder_level" value="{{ inventory.reorder_level }}" min="0" required>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="button" type="submit">Save changes</button>
+            <a class="button-link" href="{% url 'inventory_list' %}">Cancel</a>
+        </div>
     </form>
-    </section>{% endblock %}
+</section>
+{% endblock %}

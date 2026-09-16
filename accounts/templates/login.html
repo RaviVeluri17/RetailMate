@@ -2,12 +2,30 @@
 {% block title %}Sign in | RetailFlow{% endblock %}
 {% block content %}
 <section class="surface form-shell">
-    <p class="eyebrow">Welcome back</p><h1>Sign in to<br>RetailFlow.</h1><p>Pick up where you left off.</p>
+    <p class="eyebrow">Welcome back</p>
+    <h1>Sign in to<br>RetailFlow.</h1>
+    <p>Pick up where you left off.</p>
+
+    {% if error %}
+        <div class="flash">{{ error }}</div>
+    {% endif %}
+
     <form method="POST">
         {% csrf_token %}
-        <div class="field"><label for="username">Username</label><input id="username" type="text" name="username" required></div>
-        <div class="field"><label for="password">Password</label><input id="password" type="password" name="password" required></div>
-        <div class="form-actions"><button class="button" type="submit">Sign in</button><a class="button-link" href="{% url 'register' %}">Create an account</a></div>
+        <div class="field">
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" required autocomplete="username">
+        </div>
+
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" required autocomplete="current-password" >
+        </div>
+
+        <div class="form-actions">
+            <button class="button" type="submit">Sign in</button>
+            <a class="button-link" href="{% url 'register' %}">Create an account</a>
+        </div>
     </form>
 </section>
 {% endblock %}

@@ -1,8 +1,52 @@
-{% extends 'base.html' %}{% block title %}Suppliers | RetailFlow{% endblock %}{% block content %}<div class="page-heading"><div><p class="eyebrow">Partners</p><h1>Suppliers.</h1></div><a class="button" href="{% url 'supplier_create' %}">Add supplier</a></div><section class="surface table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th></th></tr></thead><tbody>
-    {% for supplier in suppliers %}
-        <tr><td><strong>{{ supplier.name }}</strong><br><span class="muted">{{ supplier.address }}</span></td><td>{{ supplier.email }}</td><td>{{ supplier.phone }}</td><td><a class="button-link" href="{% url 'supplier_update' supplier.id %}">Edit ↗</a></td></tr>
+{% extends 'base.html' %}
+{% block title %}Suppliers | RetailFlow{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Partners</p>
+        <h1>Suppliers.</h1>
+    </div>
+    {% if perms.products.add_supplier %}
+        <a class="button" href="{% url 'supplier_create' %}">Add supplier</a>
+    {% endif %}
+</div>
 
-    {% empty %}
-        <tr><td colspan="4">No suppliers available.</td></tr>
-    {% endfor %}
-</tbody></table></section>{% endblock %}
+<section class="surface table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                {% if perms.products.change_supplier or perms.products.delete_supplier %}
+                    <th></th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for supplier in suppliers %}
+                <tr>
+                    <td><strong>{{ supplier.name }}</strong><br><span class="muted">{{ supplier.address }}</span></td>
+                    <td>{{ supplier.email }}</td>
+                    <td>{{ supplier.phone }}</td>
+                    {% if perms.products.change_supplier or perms.products.delete_supplier %}
+                        <td>
+                            {% if perms.products.change_supplier %}
+                                <a class="button-link" href="{% url 'supplier_update' supplier.id %}">Edit ↗</a>
+                            {% endif %}
+
+                            {% if perms.products.delete_supplier %}
+                                <a class="button-link" href="{% url 'supplier_delete' supplier.id %}"> Delete</a>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
+
+            {% empty %}
+                <tr><td colspan="4">No suppliers available.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

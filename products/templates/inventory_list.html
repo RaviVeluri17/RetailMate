@@ -1,7 +1,45 @@
-{% extends 'base.html' %}{% block title %}Inventory | RetailFlow{% endblock %}{% block content %}<div class="page-heading"><div><p class="eyebrow">Stock control</p><h1>Inventory.</h1></div><a class="button" href="{% url 'inventory_create' %}">Add inventory</a></div><section class="surface table-wrap"><table><thead><tr><th>Product</th><th>In stock</th><th>Reorder at</th><th>Last updated</th><th></th></tr></thead><tbody>
-    {% for inventory in inventories %}
-        <tr><td><strong>{{ inventory.product.name }}</strong></td><td><span class="status">{{ inventory.stock_quantity }}</span></td><td>{{ inventory.reorder_level }}</td><td>{{ inventory.updated_at|date:"M d, Y" }}</td><td><a class="button-link" href="{% url 'inventory_update' inventory.id %}">Edit ↗</a></td></tr>
-    {% empty %}
-        <tr><td colspan="5">No inventory records available.</td></tr>
-    {% endfor %}
-</tbody></table></section>{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Inventory | RetailFlow{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Stock control</p>
+        <h1>Inventory.</h1>
+    </div>
+    {% if perms.products.add_inventory %}
+        <a class="button" href="{% url 'inventory_create' %}">Add inventory</a>
+    {% endif %}
+</div>
+
+<section class="surface table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>In stock</th>
+                <th>Reorder at</th>
+                <th>Last updated</th>
+                {% if perms.products.change_inventory %}
+                    <th></th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for inventory in inventories %}
+                <tr>
+                    <td><strong>{{ inventory.product.name }}</strong></td>
+                    <td><span class="status">{{ inventory.stock_quantity }}</span></td>
+                    <td>{{ inventory.reorder_level }}</td>
+                    <td>{{ inventory.updated_at|date:"M d, Y" }}</td>
+                    {% if perms.products.change_inventory %}
+                        <td><a class="button-link" href="{% url 'inventory_update' inventory.id %}">Edit ↗</a></td>
+                    {% endif %}
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No inventory records available.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

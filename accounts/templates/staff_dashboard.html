@@ -1,27 +1,66 @@
-{% extends 'base.html' %} {% block title %}Staff dashboard | RetailFlow{%
-endblock %} {% block content %}
-<div class="page-heading">
-    <div>
-        <p class="eyebrow">RetailFlow operations</p>
-        <h1>Good morning,<br />{{ user.username }}.</h1>
-        <p>Keep the catalog, stock, and order queue moving.</p>
-    </div>
-</div>
-<div class="grid product-grid">
-    <a class="surface card" href="{% url 'staff_order_list' %}">
-        <p class="card-kicker">Orders</p>
-        <h2>Customer queue ↗</h2>
-        <p>Review and update order status.</p>
-    </a>
-    <a class="surface card" href="{% url 'products_list' %}">
-        <p class="card-kicker">Catalog</p>
-        <h2>Product library ↗</h2>
-        <p>Browse the live product catalog.</p>
-    </a>
-    <a class="surface card" href="{% url 'inventory_list' %}">
-        <p class="card-kicker">Stock control</p>
-        <h2>Inventory ↗</h2>
-        <p>Keep reorder levels visible.</p>
-    </a>
-</div>
+{% extends 'base.html' %}
+
+{% block title %}Staff dashboard | RetailFlow{% endblock %}
+{% block content %}
+    {% if unauthorized %}
+        <section class="surface empty-state">
+            <h2>Access denied</h2>
+            <p>You don't have permission to access the staff dashboard.</p>
+            <a class="button-link" href="{% url 'products_list' %}">Return to shop</a>
+        </section>
+
+    {% else %}
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">RetailFlow operations</p>
+                <h1>Good morning,<br>{{ user.username }}.</h1>
+                <p>Keep the catalog, stock, and order queue moving.</p>
+            </div>
+        </div>
+
+        <div class="grid product-grid">
+            <a class="surface card" href="{% url 'staff_order_list' %}">
+                <p class="card-kicker">Orders</p>
+                <h2>Customer queue ↗</h2>
+                <p>Review and update order status.</p>
+            </a>
+
+            <a class="surface card" href="{% url 'products_list' %}">
+                <p class="card-kicker">Catalog</p>
+                <h2>Product library ↗</h2>
+                <p>Browse and manage the live product catalog.</p>
+            </a>
+
+            <a class="surface card" href="{% url 'create_product' %}">
+                <p class="card-kicker">Catalog</p>
+                <h2>Add product ↗</h2>
+                <p>Add a new product to RetailFlow.</p>
+            </a>
+
+            <a class="surface card" href="{% url 'category_list' %}">
+                <p class="card-kicker">Catalog</p>
+                <h2>Categories ↗</h2>
+                <p>Manage product categories.</p>
+            </a>
+
+            <a class="surface card" href="{% url 'supplier_list' %}">
+                <p class="card-kicker">Suppliers</p>
+                <h2>Suppliers ↗</h2>
+                <p>Manage supplier information.</p>
+            </a>
+
+            <a class="surface card" href="{% url 'inventory_list' %}">
+                <p class="card-kicker">Stock control</p>
+                <h2>Inventory ↗</h2>
+                <p>Manage stock and reorder levels.</p>
+            </a>
+
+            <a class="surface card" href="{% url 'product_supplier_create' %}">
+                <p class="card-kicker">Supply chain</p>
+                <h2>Product suppliers ↗</h2>
+                <p>Associate products with suppliers.</p>
+            </a>
+        </div>
+
+    {% endif %}
 {% endblock %}

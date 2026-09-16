@@ -1,7 +1,38 @@
-{% extends 'base.html' %}{% block title %}Edit supplier | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Partners</p><h1>Edit supplier.</h1>
+{% extends 'base.html' %}
+{% block title %}Edit supplier | RetailFlow{% endblock %}
+{% block content %}
+
+<section class="surface form-shell">
+    <p class="eyebrow">Partners</p>
+    <h1>Edit supplier.</h1>
+    {% if error %}
+        <div class="flash">{{ error }}</div>
+    {% endif %}
 
     <form method="POST">
         {% csrf_token %}
-        <div class="form-grid"><div class="field"><label>Name</label><input type="text" name="name" value="{{ supplier.name }}" required></div><div class="field"><label>Email</label><input type="email" name="email" value="{{ supplier.email }}" required></div><div class="field"><label>Phone</label><input type="text" name="phone" value="{{ supplier.phone }}" required></div><div class="field field-wide"><label>Address</label><textarea name="address">{{ supplier.address }}</textarea></div></div><div class="form-actions"><button class="button" type="submit">Save changes</button><a class="button-link" href="{% url 'supplier_list' %}">Cancel</a></div>
+        <div class="form-grid">
+            <div class="field">
+                <label>Name</label><input type="text" name="name" value="{{ supplier.name }}" required >
+            </div>
+
+            <div class="field">
+                <label>Email</label><input type="email" name="email" value="{{ supplier.email }}" required>
+            </div>
+
+            <div class="field">
+                <label>Phone</label><input type="text" name="phone" value="{{ supplier.phone }}" required>
+            </div>
+
+            <div class="field field-wide">
+                <label>Address</label><textarea name="address" required>{{ supplier.address }}</textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="button" type="submit">Save changes</button>
+            <a class="button-link"href="{% url 'supplier_list' %}"> Cancel</a>
+        </div>
     </form>
-    </section>{% endblock %}
+</section>
+{% endblock %}

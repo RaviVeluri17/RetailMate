@@ -1,6 +1,40 @@
-{% extends 'base.html' %}{% block title %}New supplier | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Partners</p><h1>Add a supplier.</h1>
+{% extends 'base.html' %}
+{% block title %}New supplier | RetailFlow{% endblock %}
+{% block content %}
+
+<section class="surface form-shell">
+    <p class="eyebrow">Partners</p>
+    <h1>Add a supplier.</h1>
+
+    {% if error %}
+        <div class="flash">{{ error }}</div>
+    {% endif %}
+
     <form method="POST">
         {% csrf_token %}
-        <div class="form-grid"><div class="field"><label>Name</label><input type="text" name="name" required></div><div class="field"><label>Email</label><input type="email" name="email" required></div><div class="field"><label>Phone</label><input type="text" name="phone" required></div><div class="field field-wide"><label>Address</label><textarea name="address"></textarea></div></div><div class="form-actions"><button class="button" type="submit">Create supplier</button><a class="button-link" href="{% url 'supplier_list' %}">Cancel</a></div>
+        <div class="form-grid">
+            <div class="field">
+                <label>Name</label><input type="text" name="name" required>
+            </div>
+
+            <div class="field">
+                <label>Email</label><input type="email" name="email" required>
+            </div>
+
+            <div class="field">
+                <label>Phone</label><input type="text" name="phone" required>
+            </div>
+
+            <div class="field field-wide">
+                <label>Address</label><textarea name="address" required></textarea>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="button" type="submit">Create supplier</button>
+            <a class="button-link" href="{% url 'supplier_list' %}">Cancel</a>
+        </div>
     </form>
-    </section>{% endblock %}
+</section>
+{% endblock %}

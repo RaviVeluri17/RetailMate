@@ -1,20 +1,52 @@
 {% extends 'base.html' %}
 {% block title %}Shop | RetailFlow{% endblock %}
 {% block content %}
+
 <section class="page-heading">
-    <div><p class="eyebrow">The everyday edit</p><h1>Good products.<br><em>Clear choices.</em></h1><p>Browse the essentials your business and home rely on, selected for value and consistency.</p></div>
-    <a class="button button-secondary" href="{% url 'cart' %}">View cart <span>↗</span></a>
+    <div>
+        <p class="eyebrow">The everyday edit</p>
+        <h1>Good products.<br><em>Clear choices.</em></h1>
+        <p>Browse the essentials your business and home rely on, selected for value and consistency.</p>
+    </div>
+
+    <div class="form-actions">
+        <a class="button button-secondary" href="{% url 'cart' %}">View cart <span>↗</span></a>
+        {% if perms.products.add_product %}
+            <a class="button" href="{% url 'create_product' %}">Add product</a>
+        {% endif %}
+    </div>
 </section>
+
 <div class="grid product-grid">
     {% for product in products %}
         <article class="surface card">
             <p class="card-kicker">{{ product.category.name }}</p>
             <h3>{{ product.name }}</h3>
             <p>{{ product.desc }}</p>
-            <div class="summary-row"><span class="price">₹{{ product.selling_price }}</span><a class="button-link" href="{% url 'product_details' product.id %}">View product ↗</a></div>
+            <div class="summary-row">
+                <span class="price">₹{{ product.selling_price }}</span>
+                <a class="button-link" href="{% url 'product_details' product.id %}">View product ↗</a>
+            </div>
+
+            {% if perms.products.change_product or perms.products.delete_product %}
+                <div class="form-actions">
+                    {% if perms.products.change_product %}
+                        <a class="button-link" href="{% url 'product_update' product.id %}">Edit</a>
+                    {% endif %}
+
+                    {% if perms.products.delete_product %}
+                        <a class="button-link" href="{% url 'product_delete' product.id %}">Delete</a>
+                    {% endif %}
+
+                </div>
+            {% endif %}
         </article>
+
     {% empty %}
-        <div class="surface empty-state"><h2>No products yet.</h2><p>Check back soon for the first collection.</p></div>
+        <div class="surface empty-state">
+            <h2>No products yet.</h2>
+            <p>Check back soon for the first collection.</p>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}

@@ -1,10 +1,41 @@
-{% extends 'base.html' %}{% block title %}New inventory | RetailFlow{% endblock %}{% block content %}<section class="surface form-shell"><p class="eyebrow">Stock control</p><h1>Add inventory.</h1>
+{% extends 'base.html' %}
+{% block title %}New inventory | RetailFlow{% endblock %}
+{% block content %}
+<section class="surface form-shell">
+    <p class="eyebrow">Stock control</p>
+    <h1>Add inventory.</h1>
+    {% if error %}
+        <div class="flash">{{ error }}</div>
+    {% endif %}
+
     <form method="POST">
         {% csrf_token %}
-        <div class="form-grid"><div class="field field-wide"><label>Product</label><select name="product" required>
-            {% for product in products %}
-                <option value="{{ product.id }}">{{ product.name }}</option>
-            {% endfor %}
-        </select></div><div class="field"><label>Stock quantity</label><input type="number" name="stock_quantity" min="0" required></div><div class="field"><label>Reorder level</label><input type="number" name="reorder_level" min="0" required></div></div><div class="form-actions"><button class="button" type="submit">Create inventory</button><a class="button-link" href="{% url 'inventory_list' %}">Cancel</a></div>
+        <div class="form-grid">
+            <div class="field field-wide">
+                <label>Product</label>
+                <select name="product" required>
+                    {% for product in products %}
+                        <option value="{{ product.id }}">{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Stock quantity</label>
+                <input type="number" name="stock_quantity" min="0" required >
+            </div>
+
+            <div class="field">
+                <label>Reorder level</label>
+                <input type="number" name="reorder_level" min="0" required >
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="button" type="submit">Create inventory</button>
+            <a class="button-link" href="{% url 'inventory_list' %}">Cancel</a>
+        </div>
     </form>
-    </section>{% endblock %}
+</section>
+{% endblock %}
