@@ -28,9 +28,12 @@ class ProductSupplier(models.Model):
     supplier=models.ForeignKey(Supplier,on_delete=models.PROTECT)
     supply_price=models.DecimalField(max_digits=10,decimal_places=2)
     created_at=models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ("product", "supplier")
 
 class Inventory(models.Model):
     product=models.OneToOneField(Product,on_delete=models.PROTECT)
-    stock_quantity=models.IntegerField()
-    reorder_level=models.IntegerField()
+    stock_quantity=models.PositiveIntegerField()
+    reorder_level=models.PositiveIntegerField()
     updated_at=models.DateTimeField(auto_now=True)
