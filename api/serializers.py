@@ -35,7 +35,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model=CartItem
         fields="__all__"
-        read_only_fields=["customer"]
+        read_only_fields=["customer","product"]
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:

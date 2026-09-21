@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 
 def create_user(username, email, password):
     user = User.objects.create_user(username=username, email=email, password=password)
@@ -66,6 +67,7 @@ def profile(request):
     return render(request, "profile.html")
 
 @login_required
+@require_POST
 def user_logout(request):
     logout(request)
     messages.success(request, "You have been signed out.")

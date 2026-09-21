@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from .models import Product, Category, Supplier, Inventory, ProductSupplier
-
+from decimal import Decimal,InvalidOperation
 
 @login_required
 def product_list(request):
@@ -30,8 +30,8 @@ def create_product(request):
             return render(request,"create_product.html",{"categories": categories,"error": "All required fields must be filled."})
 
         try:
-            mrp = float(mrp)
-            selling_price = float(selling_price)
+            mrp = Decimal(mrp)
+            selling_price = Decimal(selling_price)
         except ValueError:
             return render(request,"create_product.html",{"categories": categories,"error": "MRP and selling price must be valid numbers."})
 
@@ -312,7 +312,7 @@ def product_supplier_create(request):
             return render(request,"product_supplier_create.html",{"products": products,"suppliers": suppliers,"error": "All fields are required."})
 
         try:
-            supply_price = float(supply_price)
+            supply_price = Decimal(supply_price)
         except ValueError:
             return render(request,"product_supplier_create.html",{"products": products,"suppliers": suppliers,"error": "Supply price must be a valid number."})
 
