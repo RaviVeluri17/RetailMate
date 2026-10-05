@@ -1,4 +1,4 @@
-# RetailFlow
+# RetailFlow - An Ecommerce and Inventory Management System
 
 RetailFlow is a Django-based retail management and e-commerce application designed to manage products, categories, suppliers, inventory, shopping carts, customer orders, and order processing.
 
